@@ -76,6 +76,30 @@ output:
 '''
 
 # let us examine the type of x 
-print(type(x)) # it is str datatype ; so any dumps from python dictionary datatype make a str (string) datatype 
+print(type(x)) # it is str datatype ; so any dumps from python dictionary datatype make a str (string) datatype which is we called it JSON str Object
+
+
+# nested JSON element ; address is another JSON Object as you can see below
+x ='''
+{
+   "name":"John",
+   "address": {"country": "Sweden", "city": "Uppsala",  "post-code":"12234" },
+   "age":30,
+   "city":"Uppsala",
+   "options":[1,3,3,4,5],
+   "answers":["one","two","three"]
+}
+'''
+y = json.loads(x)
+print(y["address"]) # it gives a dictionary :  {"country": "Sweden", "city": "Uppsala",  "post-code":"12234" }
+
+print(y["address"]["post-code"]) # gives the post-code . You can see how we navigate the dictionary ["key1"]["key2"]  
+print(type(y["address"]["post-code"])) # it gives str datatype since we have added double quotation such as "12234"
+print(type(y["age"])) # this gives int datatype since we did not wrap it with double quotation.
+
+
+
+
+
 
 
