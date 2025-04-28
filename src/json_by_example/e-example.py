@@ -20,8 +20,8 @@ from datetime import datetime
 class DateTimeEncoder(json.JSONEncoder):
      
      def default(self, obj):
-          if(isinstance(obj, datetime)):
-               return {
+            if(isinstance(obj, datetime)):
+                return {
                        "__class": "datetime",
                        "y": obj.year,
                        "month": obj.month,
@@ -31,7 +31,7 @@ class DateTimeEncoder(json.JSONEncoder):
                        "s": obj.second
                       }
           
-               return json.JSONEncoder.default(self,obje) # if not datetime call the default implementation 
+            return json.JSONEncoder.default(self,obj) # if not datetime call the default implementation 
           
         
 class DatetimeDecoder(json.JSONDecoder):

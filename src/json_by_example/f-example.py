@@ -46,26 +46,37 @@ Try to debug your result so you can inspect and see how dictionary is format fro
 import json
 from datetime import datetime
 
-class Signal():
-    def __init__(self, _place:str, _stamp:datetime, _samples:list[complex]):
-        self._place = _place
-        self. _stamp = _stamp
-        self._sample= _samples
-
-    @property
-    def place(self):
-        return self._place
-    
-    @property
-    def stamp(self):
-        return self.stamp
-    
-    @property
-    def samples(self):
-        return self._samples
-
-
-
+data =  """{
+    "signal": {
+        "place": "Uppsala",
+        "stamp": {
+            "__class": "datetime",
+            "y": 2025,
+            "month": 4,
+            "d": 19,
+            "h": 16,
+            "minute": 23,
+            "s": 51
+        },
+        "samples:": [
+            {
+                "__class": "complex",
+                "real": -2.0,
+                "imag": 5.0
+            },
+            {
+                "__class": "complex",
+                "real": 3.0,
+                "imag": 1.0
+            },
+            {
+                "__class": "complex",
+                "real": 2.0,
+                "imag": 5.0
+            }
+        ]
+    }
+}"""
 
 
         
