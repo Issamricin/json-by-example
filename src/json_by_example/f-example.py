@@ -42,8 +42,6 @@ Use the examples in the previous files (module)  to Decode and Encode the above 
 You can see the Python object structure below.
 Try to debug your result so you can inspect and see how dictionary is format from the JSON object String 
 '''
-import json
-from datetime import datetime
 class Signal():
     def __init__(self, _place:str, _stamp:datetime, _samples:list[complex]):
         self._place = _place
@@ -53,16 +51,19 @@ class Signal():
     @property
     def place(self):
         return self._place
-#there was an error here not typing - befor stamp
+
     @property
     def stamp(self):
-        return self._stamp
+        return self.stamp
 
     @property
     def samples(self):
         return self._samples
 
 
+
+import json
+from datetime import datetime
 
 data =  """{
     "signal": {
@@ -97,64 +98,4 @@ data =  """{
 }"""
 
 
-class complexencoder(json.JSONEncoder): 
-    def defualt(self,obj):
-        if isinstance(obj,complex):
-            return{'__class':'complex',
-                   "real":obj.real,
-                   "imag":obj.imag}
-        return super().default(obj)
         
-class complexdecoder(json.JSONDecoder):
-    def __init__(self):
-        json.JSONDecoder.__init__(self,object_hook=complexdecoder.from_dict)
-
-        @staticmethod
-        def from_dict(d):
-            if d.get("__class")=="complex":
-                return complex(d.get("real"),d.get("imag"))
-            return d
-
-class datatimeencoder(json.JSONEncoder):
-    def default(self, obj):
-        if (isinstance(obj,datetime)):
-            return{
-                "__class":"datatime",
-                "y":obj.year,
-                "month":obj.month,
-                "day":obj.day,
-                "H":obj.hour,
-                "M":obj.minute,
-                "S":obj.second
-            }
-        return json.JSONEncoder.default(self,obj)
-    
-class datatimedecoder(json.JSONDecoder):
-    def __init__(self):
-        json.JSONDecoder.__init__(self,object_hook=datatimedecoder.from_dict)
-
-    def from_dict(d):
-        if d.get("__class")=="datatime":
-            return datetime(d["y"],d["month"],d["day"],d["H"],d["M"],d["S"])
-        return d
-
-
-if __name__=='__main__':
-    
-    d_data=json.loads(data)
- 
-    a=d_data["signal"]["samples:"] #typr str
-    x_complex=list(json.dumps(a,cls=complexencoder))
-    print(type(x_complex))
-    stamp=datetime.now()
-    x_datetime=json.dumps(stamp,cls=datatimeencoder)
-    print(x_datetime)
-    
-    datetimedec=json.loads(x_datetime,cls=datatimedecoder)
-    print(datetimedec)
-    print(type(datetimedec))
-    
-    s=Signal(d_data["signal"]["place"],datetimedec,x_complex)
-    print("class signal:\n",s.place)
-    print("class signal \n",s.stamp)
-    print("class signal \n",s._sample)
