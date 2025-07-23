@@ -27,9 +27,19 @@ data = """{
         "fragment": ""
     }
 }"""
+class linkdecoder(json.JSONDecoder):
+    def _init__(self):
+        json.JSONDecoder.__init__(self, object_hook=linkdecoder.from_dict)
 
+    @staticmethod
+    def from_dict(d):
+        if d.get("__class") == "ParsResult":
+            return ParseResult(d["scheme"],d["netloc"],["path"],["params"],["query"],d["fragment"])
+
+        return 
 if __name__=="__main__":
     d=json.loads(data)
     sender=d["sender"]
     print(sender)
-    ip_address
+    l=json.loads(data,cls=linkdecoder)
+    print(type(l))
