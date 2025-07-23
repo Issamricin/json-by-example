@@ -27,9 +27,3 @@ data = """{
         "fragment": ""
     }
 }"""
-
-if __name__=="__main__":
-    d=json.loads(data)
-    sender=d["sender"]
-    print(sender)
-    ip_address
