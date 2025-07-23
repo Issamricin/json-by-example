@@ -1,13 +1,17 @@
 '''
-The Python json.JSONEncoder.iterencode() method is a method of the json.JSONEncoder class that encodes a Python object into a JSON-formatted string. 
+The Python json.JSONEncoder.iterencode() method is a method of the json.JSONEncoder 
+class that encodes a Python object into a JSON-formatted string. 
 It returns an iterator that yields the encoded string in chunks.
 
-This method is useful when dealing with large datasets, as it avoids creating a single large JSON string in memory.
+This method is useful when dealing with large datasets, as it avoids creating a single large JSON string
+ in memory.
 Parameters
-This method accepts the Python object as a parameter that needs to be serialized into a JSON-formatted string.
+This method accepts the Python object as a parameter that needs to be serialized into a JSON-formatted 
+string.
 
 Return Value
-This method returns an iterator that yields the JSON-formatted string in chunks instead of returning it as a whole.
+This method returns an iterator that yields the JSON-formatted string in chunks instead of returning it 
+as a whole.
 
 '''
 

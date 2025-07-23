@@ -1,7 +1,9 @@
 '''
 Not all Python datatype can be converted into JSON ; for example complex datatype 
-we extends the class JSONEncoder . Encoding is a way to convert Python Object to JSON Object( string in this case); 
-Decoder is opposite which is to convert JSON Object(String in our case) into Python Object (dictionary in case all types can be converted)
+we extends the class JSONEncoder . Encoding is a way to convert Python Object to JSON Object( string in 
+this case); 
+Decoder is opposite which is to convert JSON Object(String in our case) into Python Object (dictionary in 
+case all types can be converted)
 '''
 import json
 
