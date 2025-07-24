@@ -14,3 +14,11 @@ you need to create a custom encoder and decoder for this data.
 7. g-example.py: This module is also an exercise with different data types (data,timedelta,timezone) that needs a different way of
 encoding and decoding.
 8. h-example.py: This module is the final exercise, it contains emailmessage, ipv4address, parseresult data types.
+
+
+
+## Note:
+After solving exercises f-g-h files, You have to make test cases for your code. 
+Its important to add test cases. Use pytest to make tests for your code and we will check them.
+
+Also there will be discussion about your code. So questions (why did you do this instead of that...etc.) about your code so be prepared.
