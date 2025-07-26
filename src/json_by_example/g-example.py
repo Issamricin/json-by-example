@@ -37,12 +37,11 @@ class DataEncoder(json.JSONEncoder):
                        "seconds":obj.seconds,
                        "microseconds":obj.microseconds                 
                       }
-        elif(isinstance(obj, timezone)):
-                return {
-                       "__class": "timezone",
-                        "offset": obj.utcoffset(None)
-                      }
-
+        elif isinstance(obj, timezone):
+            return {
+                "__class__": "timezone",
+                "offset": obj.utcoffset(None).seconds // 3600
+            }
         return super().default(obj)
 
           
@@ -60,12 +59,15 @@ class DataDecoder(json.JSONDecoder):
         elif d.get("__class") == "timedelta":
             return timedelta(d["days"],d["seconds"],d["microseconds"])
         elif d.get("__class") == "timezone":
-            return timezone(timedelta(seconds=d["offset"]))  
+            return timezone(timedelta(hours=d["offset"]))  
         return d 
           
                 
 if __name__=="__main__":
+     
      d=json.loads(data,cls=DataDecoder)
      print(d)
+     tz = timezone(timedelta(hours=2))
+     data= {"timezone": tz}
      e=json.dumps(d,cls=DataEncoder, indent=4)
      print(e)
