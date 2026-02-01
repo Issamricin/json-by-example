@@ -129,7 +129,6 @@ print(type(decoddata))
 print(decoddata)
 print(type(decoddata["signal"]["samples"][0]))
 print(type(decoddata["signal"]["stamp"]))
-
 jsondata = json.dumps(decoddata, cls=ComplexDateEncoder)
 print(type(jsondata))
 print(jsondata)
