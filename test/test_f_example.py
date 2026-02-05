@@ -1,11 +1,6 @@
-import sys
-from pathlib import Path
 import pytest
 from datetime import datetime
-
-sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
-
-from json_by_example.f_example import decode_data_complex, ComplexDateEncoder
+from src.json_by_example.f_example import decode_data_complex, ComplexDateEncoder
 import json
 
 
@@ -53,5 +48,5 @@ def test_decodeDateComplex(test_data_dateComplex):
 
 def test_encodeDateComplex(test_data_dateComplex):
     decode = json.loads(test_data_dateComplex, object_hook=decode_data_complex)
-    encode = json.dumps(decode, cls=ComplexDateEncoder, indent=2)
-    assert encode == test_data_dateComplex
+    encode = json.dumps(decode, cls=ComplexDateEncoder, indent=4)
+    assert json.loads(encode) == json.loads(test_data_dateComplex)

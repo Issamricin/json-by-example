@@ -125,10 +125,9 @@ data = """{
     }
 }"""
 decoddata = json.loads(data, object_hook=decode_data_complex)
-print(type(decoddata))
+print("Decoded : ")
 print(decoddata)
-print(type(decoddata["signal"]["samples"][0]))
-print(type(decoddata["signal"]["stamp"]))
-jsondata = json.dumps(decoddata, cls=ComplexDateEncoder)
-print(type(jsondata))
+
+jsondata = json.dumps(decoddata, cls=ComplexDateEncoder, indent=4)
+print("Encoded : ")
 print(jsondata)
