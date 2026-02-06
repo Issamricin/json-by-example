@@ -1,5 +1,5 @@
-import json
 from datetime import date, timedelta, timezone
+import json
 
 
 class DateTimeEncoder(json.JSONEncoder):
