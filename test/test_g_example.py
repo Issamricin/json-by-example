@@ -1,8 +1,6 @@
-from datetime import date, timedelta, timezone
 import pytest
 import json
-
-
+from datetime import date, timedelta, timezone
 from src.json_by_example.g_example import decode_datetime, DateTimeEncoder
 
 
