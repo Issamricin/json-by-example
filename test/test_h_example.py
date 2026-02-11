@@ -1,6 +1,8 @@
 import json
 import pytest
+from email.message import EmailMessage
 from ipaddress import IPv4Address
+from urllib.parse import ParseResult
 from src.json_by_example.h_example import decodTypes, EncodeTypes
 
 
@@ -35,9 +37,8 @@ def test_data():
 def test_decodeDataTypes(test_data):
     decode = json.loads(test_data, object_hook=decodTypes)
     assert isinstance(decode["client_ip"], IPv4Address)
-    assert isinstance(decode["link"], dict)
-    assert decode["link"]["__class"] == "ParseResult"
-    assert decode["sender"]["__class"] == "EmailMessage"
+    assert isinstance(decode["link"], ParseResult)
+    assert isinstance(decode["sender"], EmailMessage)
 
 
 def test_encodeDataTypes(test_data):

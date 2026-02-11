@@ -5,20 +5,12 @@ from urllib.parse import ParseResult
 
 
 class EncodeTypes(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, EmailMessage):
-            return {
-                "__class": "EmailMessage",
-                "headers": dict(o.items()),
-                "body": o.get_content(),
-            }
-        if isinstance(o, IPv4Address):
-            # print(o)
-            return {"__class": "IPv4Address", "address": str(o)}
+    def encode(self, o):
+        if isinstance(o, dict):
+            return super().encode({k: self.transform_special(v) for k, v in o.items()})
+
+    def transform_special(self, o):
         if isinstance(o, ParseResult):
-            # print(
-            #     f"__class: ParseResult,scheme: {o.scheme},netloc:{o.netloc},path: {o.path},params: {o.params},query :{o.query},fragment : {o.fragment}"
-            # )
             return {
                 "__class": "ParseResult",
                 "scheme": o.scheme,
@@ -28,28 +20,44 @@ class EncodeTypes(json.JSONEncoder):
                 "query": o.query,
                 "fragment": o.fragment,
             }
+        return o
+
+    def default(self, o):
+        if isinstance(o, EmailMessage):
+            return {
+                "__class": "EmailMessage",
+                "headers": {
+                    k: v for k, v in o.items() if k in ("From", "To", "Subject")
+                },
+                "body": o.get_content().rstrip("\n"),
+            }
+        if isinstance(o, IPv4Address):
+            # print(o)
+            return {"__class": "IPv4Address", "address": str(o)}
         return super().default(o)
 
 
 def decodTypes(dic):
+    if "__class" not in dic:
+        return dic
     if dic.get("__class") == "EmailMessage":
-        return {
-            "__class": "EmailMessage",
-            "headers": dic["headers"],
-            "body": dic["body"],
-        }
+        msg = EmailMessage()
+        for key, value in dic["headers"].items():
+            msg[key] = value
+        msg.set_content(dic["body"])
+        return msg
     if dic.get("__class") == "IPv4Address":
         return IPv4Address(dic["address"])
     if dic.get("__class") == "ParseResult":
-        return {
-            "__class": "ParseResult",
-            "scheme": dic["scheme"],
-            "netloc": dic["netloc"],
-            "path": dic["path"],
-            "params": dic["params"],
-            "query": dic["query"],
-            "fragment": dic["fragment"],
-        }
+
+        return ParseResult(
+            dic["scheme"],
+            dic["netloc"],
+            dic["path"],
+            dic["params"],
+            dic["query"],
+            dic["fragment"],
+        )
     return dic
 
 
